@@ -1,0 +1,57 @@
+#
+# define display information
+#
+name: Method Name Here
+
+tooltip: |
+    Perform some kind of method
+
+screenshots: []
+
+icon: icon.png
+
+#
+# define a set of similar methods that might be useful to the user
+#
+suggestions:
+    apps:
+        related:
+            [app1, app2]
+        next:
+            [app3, app4]
+    methods:
+        related:
+            [method1, method2]
+        next:
+            [method3, method4]
+
+#
+# Configure the display and description of parameters
+#
+parameters :
+    fbamodel_id :
+        ui-name : |
+            FBA Model
+        short-hint : |
+            FBA Model for FBA
+        long-hint  : | 
+            FBA Model for FBA
+
+    media : 
+        ui-name : |
+            Media  
+        short-hint : |
+            Media file for FBA
+        long-hint : |
+            Media file for FBA
+
+    fbaOutput_id :
+        ui-name : |
+            FBA output
+        short-hint : |
+            FBA output
+        long-hint : |
+            FBA output
+
+description : |
+	This app is to explore the process of calling another module from this module.  This is tried here with fba_tools.
