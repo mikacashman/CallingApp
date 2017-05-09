@@ -1,10 +1,10 @@
 #
 # define display information
 #
-name: Method Name Here
+name: CallingModule
 
 tooltip: |
-    Perform some kind of method
+    Calls fba_tools and runs FBA
 
 screenshots: []
 

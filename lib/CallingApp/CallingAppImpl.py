@@ -89,7 +89,7 @@ class CallingApp:
             raise ValueError('Method CallingFBA return value ' +
                              'returnVal is not type dict as required.')
         # return the results
-        return [files]
+        return [1]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
