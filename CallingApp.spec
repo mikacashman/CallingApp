@@ -15,7 +15,7 @@ module CallingApp {
     }CallingParams;
 
     typedef structure {
-	string temp;
+	int temp;
     }CallingResults;
 
     funcdef CallingFBA(CallingParams params) returns (CallingResults) authentication required;
