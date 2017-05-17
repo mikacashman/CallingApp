@@ -52,7 +52,7 @@
             "input_mapping": [
                 {
                     "narrative_system_variable": "workspace",
-                    "target_argument_position": 0
+                    "target_property": "workspace"
                 },
 		{
 		    "input_parameter": "media",
