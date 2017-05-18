@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #BEGIN_HEADER
 from fba_tools.fba_toolsClient import fba_tools
+import os
 #END_HEADER
 
 
@@ -30,10 +31,10 @@ class CallingApp:
     # be found
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
-	#self.callback_url = os.enviorn['SDK_CALLBACK_URL']
+	self.callback_url = os.enviorn['SDK_CALLBACK_URL']
         #END_CONSTRUCTOR
-	self.workspaceURL = config['workspace-url']
-	self.scratch = config['scratch']
+	#self.workspaceURL = config['workspace-url']
+	#self.scratch = config['scratch']
 
     def CallingFBA(self, ctx, params):
         """
