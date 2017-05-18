@@ -55,6 +55,10 @@
                     "target_property": "workspace"
                 },
 		{
+		    "input_parameter": "fbamodel_id",
+		    "target_property": "fbamodel_id"
+		},
+		{
 		    "input_parameter": "media",
 		    "target_property": "media"
 		},
