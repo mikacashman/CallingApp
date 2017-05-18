@@ -49,9 +49,9 @@ class CallingApp:
 	fba = fba_tools(self.callback_url);
 	
 	 ### STEP 1 - Parse input and catch any errors
-	if 'workspace_name' not in params:
+	if 'workspace' not in params:
 		raise ValueError('Parameter workspace is not set in input arguments')
-	workspace_name=params['workspace_name']
+	workspace_name=params['workspace']
  	if 'fbamodel_id' not in params:
 		raise ValueError('Parameter FBAModel is not set in input arguments')
 	if 'media' not in params:
