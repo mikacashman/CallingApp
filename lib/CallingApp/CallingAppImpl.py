@@ -62,7 +62,7 @@ class CallingApp:
 
 	### STEP 2 - Get the Input Data
 	token = ctx['token']
-	wsClient = workspaceServices(self.workspaceURL, token=token)
+	wsClient = workspaceService(self.workspaceURL, token=token)
 	try:
 		fbamodel = wsClient.get_objects([{'ref':params['fbamodel_id']}])[0]['data']
 	except:
