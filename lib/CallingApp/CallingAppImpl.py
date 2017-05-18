@@ -33,9 +33,9 @@ class CallingApp:
     def __init__(self, config):
         #BEGIN_CONSTRUCTOR
 	self.callback_url = os.environ['SDK_CALLBACK_URL']
-        #END_CONSTRUCTOR
 	self.workspaceURL = config['workspace-url']
 	self.scratch = config['scratch']
+        #END_CONSTRUCTOR
 
     def CallingFBA(self, ctx, params):
         """
