@@ -3,6 +3,7 @@
 from fba_tools.fba_toolsClient import fba_tools
 import os
 import sys
+import traceback
 from biokbase.workspace.client import Workspace as workspaceService
 #END_HEADER
 
