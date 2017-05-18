@@ -32,7 +32,6 @@ class CallingApp:
         #BEGIN_CONSTRUCTOR
 	self.callback_url = os.enviorn['SDK_CALLBACK_URL']
         #END_CONSTRUCTOR
-        pass
 
 
     def CallingFBA(self, ctx, params):
