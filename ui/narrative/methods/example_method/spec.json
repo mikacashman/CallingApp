@@ -61,7 +61,8 @@
 		},
 		{
 		    "input_parameter": "media",
-		    "target_property": "media"
+		    "target_property": "media",
+		    "target_type_transform": "ref"
 		},
 		{
 		    "input_parameter": "fbaOutput_id",
