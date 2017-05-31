@@ -91,11 +91,12 @@ class CallingApp:
 	print("Setting up fba params")
 	fbamodel_input = params.get('fbamodel_id')
 	media_input = params.get('media')
+	fbaOutput_input = params.get('fbaOutput_id')
 
 	fbainput = {
 		'fbamodel_id': fbamodel,
 		'media_id': media_input,
-		'fba_output_id': params['fbaOutput_id'],
+		'fba_output_id': fbaOutput_input,
 		'target_reaction': "bio1",
 		'workspace': workspace_name
 		}
