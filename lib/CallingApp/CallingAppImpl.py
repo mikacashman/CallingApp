@@ -90,8 +90,8 @@ class CallingApp:
 	
 	print("Setting up fba params")
 	fbainput = [{
-		'fbamodel_id':['fbamodel_id'],
-		'media_id':params['media'],
+		'fbamodel_id':fbamodel_id['id'],
+		'media_id':media['id'],
 		'fba_output_id':params['fbaOutput_id']
 		}]
 	#need input files here
