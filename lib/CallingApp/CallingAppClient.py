@@ -36,9 +36,11 @@ class CallingApp(object):
     def CallingFBA(self, params, context=None):
         """
         :param params: instance of type "CallingParams" (Insert your typespec
-           information here.) -> structure: parameter "workspace" of String
+           information here.) -> structure: parameter "workspace" of String,
+           parameter "fbamodel_id" of String, parameter "media" of String,
+           parameter "fbaOutput_id" of String
         :returns: instance of type "CallingResults" -> structure: parameter
-           "temp" of String
+           "report_name" of String, parameter "report_ref" of String
         """
         return self._client.call_method(
             'CallingApp.CallingFBA',

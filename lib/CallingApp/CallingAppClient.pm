@@ -81,20 +81,19 @@ sub new
     # We create an auth token, passing through the arguments that we were (hopefully) given.
 
     {
-	my $token = Bio::KBase::AuthToken->new(@args);
-	
-	if (!$token->error_message)
-	{
-	    $self->{token} = $token->token;
-	    $self->{client}->{token} = $token->token;
+	my %arg_hash2 = @args;
+	if (exists $arg_hash2{"token"}) {
+	    $self->{token} = $arg_hash2{"token"};
+	} elsif (exists $arg_hash2{"user_id"}) {
+	    my $token = Bio::KBase::AuthToken->new(@args);
+	    if (!$token->error_message) {
+	        $self->{token} = $token->token;
+	    }
 	}
-        else
-        {
-	    #
-	    # All methods in this module require authentication. In this case, if we
-	    # don't have a token, we can't continue.
-	    #
-	    die "Authentication failed: " . $token->error_message;
+	
+	if (exists $self->{token})
+	{
+	    $self->{client}->{token} = $self->{token};
 	}
     }
 
@@ -124,8 +123,12 @@ $params is a CallingApp.CallingParams
 $return is a CallingApp.CallingResults
 CallingParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a string
+	fbamodel_id has a value which is a string
+	media has a value which is a string
+	fbaOutput_id has a value which is a string
 CallingResults is a reference to a hash where the following keys are defined:
-	temp has a value which is a string
+	report_name has a value which is a string
+	report_ref has a value which is a string
 
 </pre>
 
@@ -137,8 +140,12 @@ $params is a CallingApp.CallingParams
 $return is a CallingApp.CallingResults
 CallingParams is a reference to a hash where the following keys are defined:
 	workspace has a value which is a string
+	fbamodel_id has a value which is a string
+	media has a value which is a string
+	fbaOutput_id has a value which is a string
 CallingResults is a reference to a hash where the following keys are defined:
-	temp has a value which is a string
+	report_name has a value which is a string
+	report_ref has a value which is a string
 
 
 =end text
@@ -304,6 +311,9 @@ Insert your typespec information here.
 <pre>
 a reference to a hash where the following keys are defined:
 workspace has a value which is a string
+fbamodel_id has a value which is a string
+media has a value which is a string
+fbaOutput_id has a value which is a string
 
 </pre>
 
@@ -313,6 +323,9 @@ workspace has a value which is a string
 
 a reference to a hash where the following keys are defined:
 workspace has a value which is a string
+fbamodel_id has a value which is a string
+media has a value which is a string
+fbaOutput_id has a value which is a string
 
 
 =end text
@@ -333,7 +346,8 @@ workspace has a value which is a string
 
 <pre>
 a reference to a hash where the following keys are defined:
-temp has a value which is a string
+report_name has a value which is a string
+report_ref has a value which is a string
 
 </pre>
 
@@ -342,7 +356,8 @@ temp has a value which is a string
 =begin text
 
 a reference to a hash where the following keys are defined:
-temp has a value which is a string
+report_name has a value which is a string
+report_ref has a value which is a string
 
 
 =end text

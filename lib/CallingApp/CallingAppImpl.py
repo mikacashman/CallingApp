@@ -25,8 +25,8 @@ class CallingApp:
     # the latter method is running.
     ######################################### noqa
     VERSION = "0.0.1"
-    GIT_URL = ""
-    GIT_COMMIT_HASH = ""
+    GIT_URL = "https://github.com/mikacashman/CallingApp.git"
+    GIT_COMMIT_HASH = "27b072467fc50bd885617ca32326af474a96c9ef"
 
     #BEGIN_CLASS_HEADER
     #END_CLASS_HEADER
@@ -39,15 +39,18 @@ class CallingApp:
 	self.workspaceURL = config['workspace-url']
 	self.scratch = config['scratch']
         #END_CONSTRUCTOR
+        pass
+
 
     def CallingFBA(self, ctx, params):
         """
         :param params: instance of type "CallingParams" (Insert your typespec
-           information here.) -> structure: parameter "workspace" of String
+           information here.) -> structure: parameter "workspace" of String,
+           parameter "fbamodel_id" of String, parameter "media" of String,
+           parameter "fbaOutput_id" of String
         :returns: instance of type "CallingResults" -> structure: parameter
-           "temp" of String
+           "report_name" of String, parameter "report_ref" of String
         """
-	print("Start")
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN CallingFBA
@@ -112,7 +115,7 @@ class CallingApp:
             raise ValueError('Method CallingFBA return value ' +
                              'returnVal is not type dict as required.')
         # return the results
-        return [1]
+        return [returnVal]
     def status(self, ctx):
         #BEGIN_STATUS
         returnVal = {'state': "OK",
