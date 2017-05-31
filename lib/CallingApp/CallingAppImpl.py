@@ -84,14 +84,17 @@ class CallingApp:
 		orig_error = ''.join('   ' + line for line in lines)
  		raise ValueError('Error loading Media object from workspace:\n' + orig_error)
  	print('Got Media')
-	print(pformat(fbamodel))
-	print(pformat(media))
-	print(params['fbaOutput_id'])
+	#print(pformat(fbamodel))
+	#print(pformat(media))
+	#print(params['fbaOutput_id'])
 	
 	print("Setting up fba params")
+	fbamodel_input = params.get('fbamodel_id')
+	media_input = params.get('media')
+
 	fbainput = [{
-		'fbamodel_id':fbamodel['id'],
-		'media_id':media['id'],
+		'fbamodel_id':fbamodel_input,
+		'media_id':media_input,
 		'fba_output_id':params['fbaOutput_id']
 		}]
 	#need input files here
