@@ -93,13 +93,13 @@ class CallingApp:
 	media_input = params.get('media')
 	fbaOutput_input = params.get('fba_output_id')
 
-	fbainput = [{
+	fbainput = {
 		'fbamodel_id': fbamodel_input,
 		'media_id': media_input,
 		'fba_output_id': fbaOutput_input,
 		'target_reaction': "bio1",
 		'workspace': workspace_name
-		}]
+		}
 	#need input files here
 	print(type(fbainput))
 	print("Calling FBA")
