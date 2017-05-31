@@ -96,7 +96,7 @@ class CallingApp:
 	fbainput = {
 		'fbamodel_id': fbamodel,
 		'media_id': media_input,
-		'fba_output_id': fbaOutput_input,
+		'fba_output_id': workspace_name + "/" + fbaOutput_input,
 		'target_reaction': "bio1",
 		'workspace': workspace_name
 		}
