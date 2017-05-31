@@ -82,7 +82,7 @@ class CallingApp:
  		raise ValueError('Error loading Media object from workspace:\n' + orig_error)
  	print('Got Media')
 
-	fbainput = [{'fbamodel_id':params['fbamodel_id'],'media_id':parmas['media'],'fba_output_id':params['fbaOutput_id']}]
+	fbainput = [{'fbamodel_id':params['fbamodel_id'],'media_id':params['media'],'fba_output_id':params['fbaOutput_id']}]
 	#need input files here
 	files = fba.run_flux_balance_analysis(fbainput)
 
