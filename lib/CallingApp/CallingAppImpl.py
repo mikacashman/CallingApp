@@ -46,6 +46,7 @@ class CallingApp:
         :returns: instance of type "CallingResults" -> structure: parameter
            "temp" of String
         """
+	print("Start")
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN CallingFBA
@@ -63,6 +64,7 @@ class CallingApp:
 		raise ValueError('Parameter FBA output ID is not set in input arguments')
 
 	### STEP 2 - Get the Input Data
+	print("Params are good, now getting the input data")
 	token = ctx['token']
 	wsClient = workspaceService(self.workspaceURL, token=token)
 	try:
@@ -82,10 +84,16 @@ class CallingApp:
  		raise ValueError('Error loading Media object from workspace:\n' + orig_error)
  	print('Got Media')
 
-	fbainput = [{'fbamodel_id':params['fbamodel_id'],'media_id':params['media'],'fba_output_id':params['fbaOutput_id']}]
+	print("Setting up fba params")
+	fbainput = [{
+		'fbamodel_id':params['fbamodel_id'],
+		'media_id':params['media'],
+		'fba_output_id':params['fbaOutput_id']
+		}]
 	#need input files here
+	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
-
+	print("FBA done, now finishing output")
         #END CallingFBA
 
         # At some point might do deeper type checking...
