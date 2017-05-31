@@ -101,6 +101,7 @@ class CallingApp:
 		'workspace':workspace_name
 		}]
 	#need input files here
+	print(type(fbainput))
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
