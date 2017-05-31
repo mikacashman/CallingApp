@@ -97,7 +97,8 @@ class CallingApp:
 		'fbamodel_id':fbamodel_input,
 		'media_id':media_input,
 		'fba_output_id':fbaOutput_input,
-		'target_reaction':"bio1"
+		'target_reaction':"bio1",
+		'workspace':workspace_name
 		}]
 	#need input files here
 	print("Calling FBA")
