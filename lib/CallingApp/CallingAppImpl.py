@@ -5,6 +5,7 @@ import os
 import sys
 import traceback
 from biokbase.workspace.client import Workspace as workspaceService
+from pprint import pprint, pformat
 #END_HEADER
 
 
