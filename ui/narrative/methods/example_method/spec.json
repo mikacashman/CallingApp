@@ -56,7 +56,8 @@
                 },
 		{
 		    "input_parameter": "fbamodel_id",
-		    "target_property": "fbamodel_id"
+		    "target_property": "fbamodel_id",
+		    "target_type_transform": "ref"
 		},
 		{
 		    "input_parameter": "media",
