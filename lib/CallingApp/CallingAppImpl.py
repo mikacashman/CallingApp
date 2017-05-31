@@ -93,7 +93,7 @@ class CallingApp:
 	media_input = params.get('media')
 
 	fbainput = {
-		'fbamodel_id': fbamodel_input,
+		'fbamodel_id': fbamodel,
 		'media_id': media_input,
 		'fba_output_id': params['fbaOutput_id'],
 		'target_reaction': "bio1",
