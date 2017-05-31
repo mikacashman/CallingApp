@@ -90,7 +90,7 @@ class CallingApp:
 	
 	print("Setting up fba params")
 	fbainput = [{
-		'fbamodel_id':fbamodel_id['id'],
+		'fbamodel_id':fbamodel['id'],
 		'media_id':media['id'],
 		'fba_output_id':params['fbaOutput_id']
 		}]
