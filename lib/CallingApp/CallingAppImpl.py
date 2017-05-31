@@ -83,8 +83,8 @@ class CallingApp:
 		orig_error = ''.join('   ' + line for line in lines)
  		raise ValueError('Error loading Media object from workspace:\n' + orig_error)
  	print('Got Media')
-	print(fbamodel)
-	print(media)
+	print(pformat(fbamodel))
+	print(pformat(media))
 	print(params['fbaOutput_id'])
 	
 	print("Setting up fba params")
