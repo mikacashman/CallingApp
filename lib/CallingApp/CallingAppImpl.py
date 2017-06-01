@@ -97,7 +97,7 @@ class CallingApp:
 	fbaOutput_input = params.get('fbaOutput_id')
 
 	fbainput = {
-		'fbamodel_id': fbamodel_input,
+		'fbamodel_id': fbamodel,
 		'media_id': media_input,
 		'fba_output_id': workspace_name + "/" + fbaOutput_input,
 		'target_reaction': "bio1",
@@ -111,6 +111,7 @@ class CallingApp:
 	#	'workspace': params['workspace']
 	#	}
 	print(type(fbainput))
+	print(pformat(fbainput))
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
