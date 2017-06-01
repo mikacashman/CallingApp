@@ -96,21 +96,20 @@ class CallingApp:
 	media_input = params.get('media')
 	fbaOutput_input = params.get('fbaOutput_id')
 
-	#fbainput = {
-	#	'fbamodel_id': fbamodel,
-	#	'media_id': media_input,
-	#	'fba_output_id': workspace_name + "/" + fbaOutput_input,
-	#	'target_reaction': "bio1",
-	#	'workspace': workspace_name
-	#	}
 	fbainput = {
-		'fbamodel_id': params['fbamodel_id'],
-		'media_id': params['media'],
-		'fba_output_id': params['fbaOutput_id'],
+		'fbamodel_id': fbamodel,
+		'media_id': media_input,
+		'fba_output_id': workspace_name + "/" + fbaOutput_input,
 		'target_reaction': "bio1",
-		'workspace': params['workspace']
+		'workspace': workspace_name
 		}
-#need input files here
+	#fbainput = {
+	#	'fbamodel_id': params['fbamodel_id'],
+	#	'media_id': params['media'],
+	#	'fba_output_id': params['fbaOutput_id'],
+	#	'target_reaction': "bio1",
+	#	'workspace': params['workspace']
+	#	}
 	print(type(fbainput))
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
