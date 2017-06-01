@@ -96,13 +96,13 @@ class CallingApp:
 	media_input = params.get('media')
 	fbaOutput_input = params.get('fbaOutput_id')
 
-	#fbainput = {
-	#	'fbamodel_id': fbamodel,
-	#	'media_id': media_input,
-	#	'fba_output_id': workspace_name + "/" + fbaOutput_input,
-	#	'target_reaction': "bio1",
-	#	'workspace': workspace_name
-	#	}
+	fbainput = {
+		'fbamodel_id': fbamodel,
+		'media_id': media_input,
+		'fba_output_id': workspace_name + "/" + fbaOutput_input,
+		'target_reaction': "bio1",
+		'workspace': workspace_name
+		}
 	#fbainput = {
 	#	'fbamodel_id': params['fbamodel_id'],
 	#	'media_id': params['media'],
@@ -110,12 +110,13 @@ class CallingApp:
 	#	'target_reaction': "bio1",
 	#	'workspace': params['workspace']
 	#	}
-	fbainput = {
-		'model': params['fbamodel_id'],
-		'formulation': { 'media': params['media'], 'media_workspace' : params['workspace']},
-		'workspace': params['workspace'],
-		'fba': params['fbaOutput_id']
-		}
+	# Code Cell params way of calling FBA 
+	#fbainput = {
+	#	'model': params['fbamodel_id'],
+	#	'formulation': { 'media': params['media'], 'media_workspace' : params['workspace']},
+	#	'workspace': params['workspace'],
+	#	'fba': params['fbaOutput_id']
+	#	}
 	print(type(fbainput))
 	print(pformat(fbainput))
 	print("Calling FBA")
