@@ -97,7 +97,7 @@ class CallingApp:
 	fbaOutput_input = params.get('fbaOutput_id')
 
 	fbainput = {
-		'fbamodel_id': fbamodel,
+		'fbamodel_id': fbamodel_input,
 		'media_id': media_input,
 		'fba_output_id': workspace_name + "/" + fbaOutput_input,
 		'target_reaction': "bio1",
