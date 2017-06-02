@@ -123,8 +123,7 @@ class CallingApp:
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
         #END CallingFBA
-
-	        reportObj = { 
+	reportObj = { 
                 'objects_created':[],
                 'text_message':"Meow"
         }   
