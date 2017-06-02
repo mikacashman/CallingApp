@@ -74,14 +74,13 @@ class CallingAppTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
-    def test_your_method(self):
+    def test_fbaCall(self):
         # Prepare test objects in workspace if needed using
         # self.getWsClient().save_objects({'workspace': self.getWsName(),
         #                                  'objects': []})
         #
         # Run your method by
-        # ret = self.getImpl().your_method(self.getContext(), parameters...)
+        ret = self.getImpl().CallingFBA(self.getContext(), {'workspace':'mikaelacashman:1487002527453','fbamodel_id':'BTheta.FBA','media':'Carbon-D-Glucose','fbaOutput_id':'test.out'})
         #
         # Check returned data with
         # self.assertEqual(ret[...], ...) or other unittest methods
-        pass
