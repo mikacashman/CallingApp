@@ -71,22 +71,22 @@ class CallingApp:
 	print("Params are good, now getting the input data")
 	token = ctx['token']
 	wsClient = workspaceService(self.workspaceURL, token=token)
-	try:
-		fbamodel = wsClient.get_objects([{'ref':params['fbamodel_id']}])[0]['data']
-	except:
-		exc_type, exc_value, exc_traceback = sys.exc_info()
-		lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-		orig_error = ''.join('   ' + line for line in lines)
-		raise ValueError('Error loading FBAModel object from workspace:\n' + orig_error)
-	print('Got FBAModel')
-	try:
-		media = wsClient.get_objects([{'ref':params['media']}])[0]['data']
-	except:
-		exc_type, exc_value, exc_traceback = sys.exc_info()
- 		lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
-		orig_error = ''.join('   ' + line for line in lines)
- 		raise ValueError('Error loading Media object from workspace:\n' + orig_error)
- 	print('Got Media')
+	#try:
+	#	fbamodel = wsClient.get_objects([{'ref':params['fbamodel_id']}])[0]['data']
+	#except:
+	#	exc_type, exc_value, exc_traceback = sys.exc_info()
+	#	lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+	#	orig_error = ''.join('   ' + line for line in lines)
+	#	raise ValueError('Error loading FBAModel object from workspace:\n' + orig_error)
+	#print('Got FBAModel')
+	#try:
+	#	media = wsClient.get_objects([{'ref':params['media']}])[0]['data']
+	#except:
+	#	exc_type, exc_value, exc_traceback = sys.exc_info()
+ 	#	lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+	#	orig_error = ''.join('   ' + line for line in lines)
+ 	#	raise ValueError('Error loading Media object from workspace:\n' + orig_error)
+ 	#print('Got Media')
 	#print(pformat(fbamodel))
 	#print(pformat(media))
 	#print(params['fbaOutput_id'])
@@ -97,10 +97,10 @@ class CallingApp:
 	fbaOutput_input = params.get('fbaOutput_id')
 
 	fbainput = {
-		'fbamodel_id': fbamodel,
+		'fbamodel_id': params['fbamodel_id'],
 		'media_id': media_input,
 		'fba_output_id': workspace_name + "/" + fbaOutput_input,
-		'target_reaction': "bio1",
+		#'target_reaction': "bio1",
 		'workspace': workspace_name
 		}
 	#fbainput = {
@@ -118,7 +118,7 @@ class CallingApp:
 	#	'fba': params['fbaOutput_id']
 	#	}
 	print(type(fbainput))
-	print(pformat(fbainput))
+	#print(pformat(fbainput))
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
