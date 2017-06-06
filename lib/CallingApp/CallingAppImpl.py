@@ -124,6 +124,12 @@ class CallingApp:
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
+	print(files)
+	print("----attempting to download file as sbml")
+	smbl_file = fba.model_to_sbml_file("3469/11/22")
+	print(os.path.abspath(smbl_file))
+	print("----")
+
 	reportObj = { 
                 'objects_created':[],
                 'text_message':"Meow"
