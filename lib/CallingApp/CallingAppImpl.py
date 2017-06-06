@@ -126,8 +126,10 @@ class CallingApp:
 	print("FBA done, now finishing output")
 	print(files)
 	print("----attempting to download file as sbml")
-	smbl_file = fba.model_to_sbml_file("3469/11/22")
-	print(os.path.abspath(smbl_file))
+	#smbl_file = fba.model_to_sbml_file({'workspace_name': params['workspace'],'model_name': fbainput['fba_output_id']})
+	sbml_file = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
+	print(sbml_file)
+	#print(os.path.abspath(smbl_file))
 	print("----")
 
 	reportObj = { 
