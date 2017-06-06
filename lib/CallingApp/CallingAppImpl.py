@@ -4,6 +4,7 @@ from fba_tools.fba_toolsClient import fba_tools
 import os
 import sys
 import traceback
+import uuid
 from biokbase.workspace.client import Workspace as workspaceService
 from pprint import pprint, pformat
 #END_HEADER
@@ -54,8 +55,9 @@ class CallingApp:
         # ctx is the context object
         # return variables are: returnVal
         #BEGIN CallingFBA
-	fba = fba_tools(self.callback_url);
 	
+	fba = fba_tools(self.callback_url);
+		
 	 ### STEP 1 - Parse input and catch any errors
 	if 'workspace' not in params:
 		raise ValueError('Parameter workspace is not set in input arguments')
@@ -122,7 +124,6 @@ class CallingApp:
 	print("Calling FBA")
 	files = fba.run_flux_balance_analysis(fbainput)
 	print("FBA done, now finishing output")
-        #END CallingFBA
 	reportObj = { 
                 'objects_created':[],
                 'text_message':"Meow"
@@ -132,7 +133,7 @@ class CallingApp:
         if 'provenance' in ctx:
                 provenance = ctx['provenance']
         # add additional info to provenance here, in this case the input data object reference
-        provenance[0]['input_ws_objects']=[workspace_name+'/'+fbamodel['id']]
+        provenance[0]['input_ws_objects']=[workspace_name+'/'+params['fbamodel_id']]
         report_info_list = None
         try:
                 report_info_list = wsClient.save_objects({
@@ -141,7 +142,7 @@ class CallingApp:
                         {   
                                 'type':'KBaseReport.Report',
                                 'data':reportObj,
-                                'name':'FS_report',
+                                'name':'CallingFBA_report' + str(hex(uuid.getnode())),
                                 'meta':{},
                                 'hidden':1, # important!  make sure the report is hidden
                                 'provenance':provenance
@@ -160,6 +161,7 @@ class CallingApp:
                 'report_ref': str(report_info[6]) + '/' + str(report_info[0]) + '/' + str(report_info[4])
         }   
 
+        #END CallingFBA
         # At some point might do deeper type checking...
         if not isinstance(returnVal, dict):
             raise ValueError('Method CallingFBA return value ' +
