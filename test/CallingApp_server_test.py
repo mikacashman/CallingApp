@@ -51,14 +51,18 @@ class CallingAppTest(unittest.TestCase):
         cls.serviceImpl = CallingApp(cls.cfg)
         cls.scratch = cls.cfg['scratch']
         cls.callback_url = os.environ['SDK_CALLBACK_URL']
+	
 	##TESTING
+	#Set up test narrative
 	print("Setting up files")
 	suffix = int(time.time() + 1000)
 	wsName = "test_Calling_" + str(suffix)
 	ret = cls.wsClient.create_workspace({'workspace':wsName})
+	#Set up imported modules
 	fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
 	genomeUtil = GenomeFileUtil(os.environ['SDK_CALLBACK_URL'])
 	
+	#Save the genome to test narrative
 	filenamegenome = "KBase_derived_BTheta.gbff"
 	pathgenome = os.path.join(cls.cfg['scratch'],filenamegenome)
 	shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
@@ -66,50 +70,45 @@ class CallingAppTest(unittest.TestCase):
 	tempgenome = genomeUtil.genbank_to_genome(params)
 	print("Genome saved")
 
-	filename = "Jmmol.120.tsv"
+	#Save the media to test narrative
+	filename = "Jmmol.127.tsv"
 	path = os.path.join(cls.cfg['scratch'],filename)
 	shutil.copy(os.path.join("test_files",filename),path)
-	params = {'media_file':{'path':path},'media_name':'Jmmol120.media','workspace_name':wsName}
+	params = {'media_file':{'path':path},'media_name':'Jmmol127.media','workspace_name':wsName}
 	tempmedia=fba.tsv_file_to_media(params)	
 	print("Media saved")
 	
-	filenamemodel = "kb|g.436.fbamdl61.xls"
+	#Save the FBA model to test narrative
+	filenamemodel = "m127.GF.xls"
 	pathmodel = os.path.join(cls.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
 	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
 	tempmodel = fba.excel_file_to_model(params)
 	print("FBA Model saved")
 
-	#Actual Call
+	##Call to FBA
+	#Set up the paramaters
 	print("Setting up fba params")
-        #fbamodel_input = params.get('fbamodel_id')
-        #media_input = params.get('media')
-        #fbaOutput_input = params.get('fbaOutput_id')
-
-        fbainput = { 
-                'fbamodel_id': tempmodel['ref'],
-                'media_id': tempmedia['ref'],
-                'fba_output_id': "testOutinTest",
-                #'target_reaction': "bio1",
-                'workspace': wsName
-        }   
-        print(type(fbainput))
+	fbainput = {
+		'fbamodel_id': "BT127GF.FBAModel",
+		'media_id': "Jmmol127.media",
+		'fba_output_id': "testout",
+		'workspace': wsName
+	}
         print(pformat(fbainput))
         print("Calling FBA")
-        files = fba.run_flux_balance_analysis(fbainput)
+        #Make the call to FBA
+	files = fba.run_flux_balance_analysis(fbainput)
         print("FBA done, now finishing output")
         print(files)
-        print("----attempting to download file as sbml")
-        #smbl_file = fba.model_to_sbml_file({'workspace_name': params['workspace'],'model_name': fbainput['fba_output_id']})
-        sbml_file = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
-	print(sbml_file)
-
-
-
-	#print("Ready to call")
-	#print(params)
-	#ret = cls.getImpl().CallingFBA(self.getContext(), {'workspace':wsName,'fbamodel_id':'BT127GF.FBAModel','media':tempmedia,'fbaOutput_id':'test.out'})
-        
+        #Export the output FBA as tsv and excel
+	print("----attempting to download file as tsv and excel")
+        excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
+	tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
+	print(tsv_FBA)
+	print(excel_FBA)
+       	##DONE
+	 
     @classmethod
     def tearDownClass(cls):
         if hasattr(cls, 'wsName'):
