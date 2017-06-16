@@ -110,7 +110,7 @@ class CallingAppTest(unittest.TestCase):
 	print(excel_FBA)
        	
 	#Delete test workspace
-	cls.wsClient.delete_workspace({'workspace': cls.wsName})
+	cls.wsClient.delete_workspace({'workspace': wsName})
         print('Test workspace was deleted')
 	#DONE
 	 
