@@ -76,6 +76,7 @@ class CallingAppTest(unittest.TestCase):
 	shutil.copy(os.path.join("test_files",filename),path)
 	params = {'media_file':{'path':path},'media_name':'Jmmol127.media','workspace_name':wsName}
 	tempmedia=fba.tsv_file_to_media(params)	
+	print(tempmedia)
 	print("Media saved")
 	
 	#Save the FBA model to test narrative
@@ -107,13 +108,18 @@ class CallingAppTest(unittest.TestCase):
 	tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
 	print(tsv_FBA)
 	print(excel_FBA)
-       	##DONE
+       	
+	#Delete test workspace
+	cls.wsClient.delete_workspace({'workspace': cls.wsName})
+        print('Test workspace was deleted')
+	#DONE
 	 
     @classmethod
     def tearDownClass(cls):
         if hasattr(cls, 'wsName'):
             cls.wsClient.delete_workspace({'workspace': cls.wsName})
             print('Test workspace was deleted')
+	return
 
     def getWsClient(self):
         return self.__class__.wsClient
