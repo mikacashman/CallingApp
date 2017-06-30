@@ -101,44 +101,17 @@ class CallingAppTest(unittest.TestCase):
 	print("Setting up files")
 	#suffix = int(time.time() + 1000)
 	#wsName = "test_Calling_" + str(suffix)
-	#CallingAppTesting
-	wsName = "mikaelacashman:narrative_1497647542330"
+	wsName = "mikaelacashman:narrative_1498775075894" #CallingAppOV
 	#ret = cls.wsClient.create_workspace({'workspace':wsName})
 	#Set up imported modules
 	fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
-	genomeUtil = GenomeFileUtil(os.environ['SDK_CALLBACK_URL'])
 	
-	#Save the genome to test narrative
-	filenamegenome = "KBase_derived_BTheta.gbff"
-	pathgenome = os.path.join(self.cfg['scratch'],filenamegenome)
-	shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
-	params = {'file':{'path':pathgenome},'genome_name':"BTheta",'workspace_name':wsName}
-	tempgenome = genomeUtil.genbank_to_genome(params)
-	print("Genome saved")
-
-	#Save the media to test narrative
-	filename = "Jmmol.127.tsv"
-	path = os.path.join(self.cfg['scratch'],filename)
-	shutil.copy(os.path.join("test_files",filename),path)
-	params = {'media_file':{'path':path},'media_name':'Jmmol127.media','workspace_name':wsName}
-	tempmedia=fba.tsv_file_to_media(params)	
-	print(tempmedia)
-	print("Media saved")
-	
-	#Save the FBA model to test narrative
-	filenamemodel = "m127.GF.xls"
-	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
-	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
-	tempmodel = fba.excel_file_to_model(params)
-	print("FBA Model saved")
-
 	##Call to FBA
 	#Set up the paramaters
 	print("Setting up fba params")
 	fbainput = {
 		'fbamodel_id': "BT127GF.FBAModel",
-		'media_id': "Jmmol127.media",
+		'media_id': "Jmmol125.media",
 		'fba_output_id': "testout",
 		'workspace': wsName
 	}
@@ -150,14 +123,14 @@ class CallingAppTest(unittest.TestCase):
         print(files)
 	#print(files['objective'])#this should work but it doesn't, maybe because the model didn't grow?
 	#print(self.wsClient.list_objects({'workspaces':wsName}))
-	new_fba = self.wsClient.get_object({'id':'testout','wsName':wsName})
-	print(new_fba['objectiveValue'])
+	#new_fba = self.wsClient.get_object({'id':'testout','wsName':wsName})
+	#print(new_fba['objectiveValue'])
         #Export the output FBA as tsv and excel
-	print("----attempting to download file as tsv and excel")
-        excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
-	tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
-	print(tsv_FBA)
-	print(excel_FBA)
+	#print("----attempting to download file as tsv and excel")
+        #excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
+	#tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
+	#print(tsv_FBA)
+	#print(excel_FBA)
        	
 	#Delete test workspace
 	#cls.wsClient.delete_workspace({'workspace': wsName})
