@@ -112,15 +112,19 @@ class CallingAppTest(unittest.TestCase):
 
 	#Save the FBA model to test narrative
 	start = time.time()
-	filenamemodel = "m127.GF.xls"
+	filenamemodel = "m127.GF.r.tsv"
 	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.excel.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
-	tempmodel = fba.excel_file_to_model(params)
+	filenamemodel2 = "m127.GF.c.tsv"
+	pathmodel2 = os.path.join(self.cfg['scratch'],filenamemodel2)
+	shutil.copy(os.path.join("test_files",filenamemodel2),pathmodel2)
+	params = {'model_file':{'compounds_file':pathmodel2,'path':pathmodel},'model_name':"BT127GF.tsv.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	#tempmodel = fba.excel_file_to_model(params)
+	tempmodel = fba.tsv_file_to_model(params)
 	print("FBA Model saved: "+str(time.time()-start))
 
 
-	for x in range(120,127):
+	for x in range(120,120):
 		print("Loop "+str(x))
 		start = time.time()
 		#Save the media to test narrative
@@ -141,7 +145,7 @@ class CallingAppTest(unittest.TestCase):
 		#Set up the paramaters
 		print("Setting up fba params")
 		fbainput = {
-			'fbamodel_id': "BT127GF.excel.FBAModel",
+			'fbamodel_id': "BT127GF.tsv.FBAModel",
 			'media_id': "Jmmol"+str(x)+".media",
 			#'media_id': "Jmmol127.excel.media",
 			'fba_output_id': "testout."+str(x),
