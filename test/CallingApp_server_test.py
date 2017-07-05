@@ -121,6 +121,8 @@ class CallingAppTest(unittest.TestCase):
 	files = fba.run_flux_balance_analysis(fbainput)
         print("FBA done, now finishing output")
         print(files)
+	new_fba_ref = files['new_fba_ref']
+	print("Objective Value is: " + str(self.wsClient.get_object({'workspace':wsName,'id':fbainput['fba_output_id']})['data']['objectiveValue']))
 	#print(files['objective'])#this should work but it doesn't, maybe because the model didn't grow?
 	#print(self.wsClient.list_objects({'workspaces':wsName}))
 	#new_fba = self.wsClient.get_object({'id':'testout','wsName':wsName})
