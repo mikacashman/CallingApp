@@ -112,15 +112,21 @@ class CallingAppTest(unittest.TestCase):
 
 	#Save the FBA model to test narrative
 	start = time.time()
-	filenamemodel = "m127.GF.r.tsv"
+	#filenamemodel = "m127.GF.r.tsv"
+	#pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
+	#shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
+	#filenamemodel2 = "m127.GF.c.tsv"
+	#pathmodel2 = os.path.join(self.cfg['scratch'],filenamemodel2)
+	#shutil.copy(os.path.join("test_files",filenamemodel2),pathmodel2)
+	#params = {'model_file':{'compounds_file':pathmodel2,'path':pathmodel},'model_name':"BT127GF.tsv.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	#tempmodel = fba.excel_file_to_model(params)
+	#tempmodel = fba.tsv_file_to_model(params)
+	filenamemodel = "m127.GF.xls"
 	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	filenamemodel2 = "m127.GF.c.tsv"
-	pathmodel2 = os.path.join(self.cfg['scratch'],filenamemodel2)
-	shutil.copy(os.path.join("test_files",filenamemodel2),pathmodel2)
-	params = {'model_file':{'compounds_file':pathmodel2,'path':pathmodel},'model_name':"BT127GF.tsv.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
-	#tempmodel = fba.excel_file_to_model(params)
-	tempmodel = fba.tsv_file_to_model(params)
+	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.excel.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	tempmodel = fba.excel_file_to_model(params)
+	print("FBA Model saved: "+str(time.time()-start))
 	print("FBA Model saved: "+str(time.time()-start))
 
 
@@ -160,13 +166,15 @@ class CallingAppTest(unittest.TestCase):
         	#print("sleeping...")
 		#time.sleep(120)
 		#print("awake!!!")
-		print(files)
         	#Export the output FBA as tsv and excel
 		#print("----attempting to download file as tsv and excel")
         	#excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
 		#tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
 		#print(tsv_FBA)
 		#print(excel_FBA)
+		print(files)
+		new_fba_ref = files['new_fba_ref']
+		print("Objective Value is: " + str(self.wsClient.get_object({'workspace':wsName,'id':fbainput['fba_output_id']})['data']['objectiveValue']))
 		print("Loop "+str(x)+" done: ",str(time.time()-start))       	
 
 	#Delete test workspace
