@@ -25,7 +25,7 @@ class CallingAppTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        token = environ.get('KB_AUTH_TOKEN', None)
+	token = environ.get('KB_AUTH_TOKEN', None)
         user_id = requests.post(
             'https://kbase.us/services/authorization/Sessions/Login',
             data='token={}&fields=user_id'.format(token)).json()['user_id']
@@ -105,6 +105,27 @@ class CallingAppTest(unittest.TestCase):
 	#ret = cls.wsClient.create_workspace({'workspace':wsName})
 	#Set up imported modules
 	fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
+
+	#Save the FBA model to test narrative
+	start = time.time()
+	filenamemodel = "m127.GF.xls"
+	##filenamemodel = "m127.GF.sbml"
+	###filenamemodelR = "m127.GF.r.tsv"
+	###filenamemodelC = "m127.GF.c.tsv"
+	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
+	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
+	###pathmodelR = os.path.join(self.cfg['scratch'],filenamemodelR)
+	###shutil.copy(os.path.join("test_files",filenamemodelR),pathmodelR)
+	###pathmodelC = os.path.join(self.cfg['scratch'],filenamemodelC)
+	###shutil.copy(os.path.join("test_files",filenamemodelC),pathmodelC)
+	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.excel.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	tempmodel = fba.excel_file_to_model(params)
+	##params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.sbml.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	##tempmodel = fba.sbml_file_to_model(params)
+	###params = {'model_file':{'path':pathmodelR},'model_name':"BT127GF.tsv.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"],	'compounds_file':{'path':pathmodelC}}
+	###tempmodel = fba.tsv_file_to_model(params)
+	print("FBA Model saved: "+str(time.time()-start))
+	
 	
 	##Call to FBA
 	#Set up the paramaters
@@ -123,16 +144,18 @@ class CallingAppTest(unittest.TestCase):
         print(files)
 	new_fba_ref = files['new_fba_ref']
 	print("Objective Value is: " + str(self.wsClient.get_object({'workspace':wsName,'id':fbainput['fba_output_id']})['data']['objectiveValue']))
+	
+	#OLD CODE
 	#print(files['objective'])#this should work but it doesn't, maybe because the model didn't grow?
 	#print(self.wsClient.list_objects({'workspaces':wsName}))
 	#new_fba = self.wsClient.get_object({'id':'testout','wsName':wsName})
 	#print(new_fba['objectiveValue'])
         #Export the output FBA as tsv and excel
-	#print("----attempting to download file as tsv and excel")
-        #excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
+	print("----attempting to download file as tsv and excel")
+        excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
 	#tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
 	#print(tsv_FBA)
-	#print(excel_FBA)
+	print(excel_FBA)
        	
 	#Delete test workspace
 	#cls.wsClient.delete_workspace({'workspace': wsName})
