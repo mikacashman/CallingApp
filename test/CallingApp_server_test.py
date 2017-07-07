@@ -93,7 +93,6 @@ class CallingAppTest(unittest.TestCase):
 	suffix = int(time.time() + 1000)
 	wsName = "test_media_Calling_" + str(suffix)
 	ret = self.wsClient.create_workspace({'workspace':wsName})
-	#wsName = "mikaelacashman:narrative_1497647542330"
 	#wsName = 'mikaelacashman:narrative_1498766137171'#CallingSDKTest
 	#Set up imported modules
 	fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
@@ -112,40 +111,28 @@ class CallingAppTest(unittest.TestCase):
 
 	#Save the FBA model to test narrative
 	start = time.time()
-	#filenamemodel = "m127.GF.r.tsv"
-	#pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
-	#shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	#filenamemodel2 = "m127.GF.c.tsv"
-	#pathmodel2 = os.path.join(self.cfg['scratch'],filenamemodel2)
-	#shutil.copy(os.path.join("test_files",filenamemodel2),pathmodel2)
-	#params = {'model_file':{'compounds_file':pathmodel2,'path':pathmodel},'model_name':"BT127GF.tsv.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
-	#tempmodel = fba.excel_file_to_model(params)
-	#tempmodel = fba.tsv_file_to_model(params)
 	filenamemodel = "m127.GF.xls"
 	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	params = {'model_file':{'path':pathmodel},'model_name':"BT127GF.excel.FBAModel",'workspace_name':wsName,'genome':"BTheta",'biomass':["bio1"]}
+	params = {'model_file':{'path':pathmodel},
+		'model_name':"BT127GF.excel.FBAModel",
+		'workspace_name':wsName,
+		'genome':"BTheta",
+		'biomass':["bio1"]}
 	tempmodel = fba.excel_file_to_model(params)
 	print("FBA Model saved: "+str(time.time()-start))
-	print("FBA Model saved: "+str(time.time()-start))
-
 
 	for x in range(120,120):
 		print("Loop "+str(x))
 		start = time.time()
 		#Save the media to test narrative
-		#filename = "Jmmol.127.tsv"
 		filename = "Jmmol." + str(x) + ".tsv"
 		path = os.path.join(self.cfg['scratch'],filename)
 		shutil.copy(os.path.join("test_files",filename),path)
 		params = {'media_file':{'path':path},'media_name':'Jmmol'+str(x)+'.media','workspace_name':wsName}
-		#params = {'media_file':{'path':path},'media_name':'Jmmol127.excel.media','workspace_name':wsName}
 		print("saving...")
 		tempmedia=fba.tsv_file_to_media(params)	
-		#tempmedia=fba.excel_file_to_media(params)
-		##print(tempmedia)
 		print("Media " + str(x) + " saved")
-	
 
 		##Call to FBA
 		#Set up the paramaters
@@ -153,33 +140,27 @@ class CallingAppTest(unittest.TestCase):
 		fbainput = {
 			'fbamodel_id': "BT127GF.tsv.FBAModel",
 			'media_id': "Jmmol"+str(x)+".media",
-			#'media_id': "Jmmol127.excel.media",
 			'fba_output_id': "testout."+str(x),
-			#'fba_output_id': "testout.127",
 			'workspace': wsName
 		}
-        	##print(pformat(fbainput))
         	print("Calling FBA")
         	#Make the call to FBA
 		files = fba.run_flux_balance_analysis(fbainput)
         	print("FBA done, now finishing output")
-        	#print("sleeping...")
-		#time.sleep(120)
-		#print("awake!!!")
         	#Export the output FBA as tsv and excel
-		#print("----attempting to download file as tsv and excel")
-        	#excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
-		#tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
-		#print(tsv_FBA)
-		#print(excel_FBA)
+		print("----attempting to download file as tsv and excel")
+        	excel_FBA = fba.export_fba_as_excel_file({'input_ref': files['new_fba_ref']})
+		tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
+		print(tsv_FBA)
+		print(excel_FBA)
 		print(files)
 		new_fba_ref = files['new_fba_ref']
 		print("Objective Value is: " + str(self.wsClient.get_object({'workspace':wsName,'id':fbainput['fba_output_id']})['data']['objectiveValue']))
 		print("Loop "+str(x)+" done: ",str(time.time()-start))       	
 
 	#Delete test workspace
-	#cls.wsClient.delete_workspace({'workspace': wsName})
-        #print('Test workspace was deleted')
+	cls.wsClient.delete_workspace({'workspace': wsName})
+        print('Test workspace was deleted')
 	#DONE
 
         # Check returned data with
