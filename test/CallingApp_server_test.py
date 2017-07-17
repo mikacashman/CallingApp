@@ -1,4 +1,10 @@
 # -*- coding: utf-8 -*-
+# This version will take a random sample of configurations
+# from a file in test/test_files (set to IDs52488.out right
+# now) and runs FBA through them.
+#
+# OUTPUT: samples chosen, OVs, time for each loop, IDs
+
 import unittest
 import os  # noqa: F401
 import json  # noqa: F401
@@ -80,7 +86,7 @@ class CallingAppTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
-    def test_fbaCall(self):
+    def est_fbaCall(self):
 	print("Test Began")
 	start = time.time()
 	FullStart = time.time()
@@ -100,11 +106,10 @@ class CallingAppTest(unittest.TestCase):
 	#Save the genome to test narrative
 	#Must be a genbank type
 	start = time.time()
-	#filenamegenome = "KBase_derived_BTheta.gbff"
-	filenamegenome = "MA.gbff"	
+	filenamegenome = "KBase_derived_BTheta.gbff"
 	pathgenome = os.path.join(self.cfg['scratch'],filenamegenome)
 	shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
-	params = {'file':{'path':pathgenome},'genome_name':"MA",'workspace_name':wsName}
+	params = {'file':{'path':pathgenome},'genome_name':"BTheta",'workspace_name':wsName}
 	tempgenome = genomeUtil.genbank_to_genome(params)
 	print("Genome saved: "+str(time.time()-start))
 
@@ -112,25 +117,23 @@ class CallingAppTest(unittest.TestCase):
 	#Currently all the same
 	#To alter move into for loop
 	start = time.time()
-	#filenamemodel = "m125.GF.xls"
-	filenamemodel = "MA.GF.xls"
+	filenamemodel = "m125.GF.xls"
 	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
 	params = {'model_file':{'path':pathmodel},
-		'model_name':"MAGF.FBAModel",
+		'model_name':"BT125GF.FBAModel",
 		'workspace_name':wsName,
-		'genome':"MA",
+		'genome':"BTheta",
 		'biomass':["bio1"]}
 	tempmodel = fba.excel_file_to_model(params)
 	print("FBA Model saved: "+str(time.time()-start))
 
 	#Save the media to test narrative
-	#filename = "Jmmol.125.tsv"
-	filename = "MA1.media.tsv"
+	filename = "Jmmol.125.tsv"
 	path = os.path.join(self.cfg['scratch'],filename)
 	shutil.copy(os.path.join("test_files",filename),path)
 	params = {'media_file':{'path':path},
-		'media_name':'MA1.media',
+		'media_name':'Jmmol125.media',
 		'workspace_name':wsName}
 	tempmedia=fba.tsv_file_to_media(params)	
 	print("Media saved (" + str(time.time()-start) + ")")
@@ -157,8 +160,8 @@ class CallingAppTest(unittest.TestCase):
 	#Set up basic fbaparams
 	fbaparams = {
         	'workspace':wsName,
-		"fbamodel_id":  "MAGF.FBAModel",
-        	"media_id":  "MA1.media",
+		"fbamodel_id":  "BT125GF.FBAModel",
+        	"media_id":  "Jmmol125.media",
         	"target_reaction":  "bio1",
         	"fba_output_id":  "test_file_params",
         	"fva":  1, 
@@ -172,58 +175,7 @@ class CallingAppTest(unittest.TestCase):
         	"exp_threshold_margin":  0.1,
         	"activation_coefficient":  0.5 
 	}
-	
-
-	fbaMAtest = [
-		["-100;cpd00009;1","-100;cpd00029;1","-100;cpd00084;10","-100;cpd00011;10"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;0"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;1"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;2"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;3"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;4"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;5"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;6"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;7"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;8"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;9"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;0","-100;cpd00011;10"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;0"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;1"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;2"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;3"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;4"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;5"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;6"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;7"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;8"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;9"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;1","-100;cpd00011;10"],
-		["-100;cpd00009;1","-100;cpd00029;2","-100;cpd00084;2","-100;cpd00011;0"]
-	]
-
-	for p in fbaMAtest:
-		fbaparams['custom_bound_list']=p
-		print(fbaparams)
-		returnVal = {}
-		count = 1
-
-		#temptemp
-		files = fba.run_flux_balance_analysis(fbaparams)
-		new_fba_ref = files['new_fba_ref']
-		returnVal['OV'] = str(self.wsClient.get_object(
-			{'workspace':wsName,
-			'id':fbaparams['fba_output_id']})['data']['objectiveValue'])
-		returnVal['time'] = str(time.time()-start)       	
-		OV_file.write("%s\n" %returnVal['OV'])
-		print("OV")
-		print(returnVal['OV'])
-		
-	#testing the ID file
-	for i in range(0,0):
-		t = linecache.getline(allID_path,i)
-		print (t)
-		print (t.split(","))
-
+	#fbaparams['custom_bound_list']=["-100;cpd00009;1","-100;cpd00029;1","-100;cpd00084;10","-100;cpd00011;10"]
 
 	#Random Sample from file
 	#set and print a random seed
@@ -231,10 +183,8 @@ class CallingAppTest(unittest.TestCase):
 	sample = random.sample(xrange(0,52488),10)
 	sample_file.write(str(sample))
 	sample_file.close()
-	#use seek (correctly) to generate the tests to run
 	print("Begining loop.  Elapsed time: " + str(time.time()-FullStart))
-	#for samp in sample:
-	for samp in range(1,1):
+	for samp in sample:
 		print("loop: " + str(count) + "	   elapsed time: " + str(time.time()-FullStart))
 		ID=linecache.getline(allID_path,samp+1).strip()
 		params=ID.split(",")
