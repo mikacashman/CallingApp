@@ -86,7 +86,7 @@ class CallingAppTest(unittest.TestCase):
         return self.__class__.ctx
 
     # NOTE: According to Python unittest naming rules test method names should start from 'test'. # noqa
-    def est_fbaCall(self):
+    def test_fbaCall(self):
 	print("Test Began")
 	start = time.time()
 	FullStart = time.time()
@@ -215,6 +215,15 @@ class CallingAppTest(unittest.TestCase):
 		count+=1
 		OV_file.write("%s\n" %returnVal['OV'])
 		status_file.write("%s\n" %returnVal['time'])
+		
+		#Downloading (takes 3-6 mintues per file)
+		#print("FBA done, now finishing output (" + str(time.time()-start) + ")")
+        	#Export the output FBA as tsv and excel
+		#print("----download FBA as tsv")
+		#tsv_FBA = fba.export_fba_as_tsv_file({'input_ref': files['new_fba_ref']})
+		#print(tsv_FBA)
+		#print("File downloaded (" + str(time.time()-start) + ")") 
+	
 	OV_file.close()
 	status_file.close()
 	ID_file.close()
