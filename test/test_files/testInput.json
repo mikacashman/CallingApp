@@ -1,0 +1,21 @@
+{
+	"fbamodel_id":  "BT125GF.FBAModel",
+	"media_id":  "Jmmol125.media",
+	"target_reaction":  "bio1",
+	"fba_output_id":  "test_file100_params",
+	"fva":  1,
+	"minimize_flux":  1,
+	"simulate_ko":  1,
+	"feature_ko_list":  [],
+	"reaction_ko_list":  "",
+	"custom_bound_list":  [],
+	"media_supplement_list":  "",
+	"exp_threshold_percentile":  0.5,
+	"exp_threshold_margin":  0.1,
+	"activation_coefficient":  0.5,
+	"max_c_uptake":  100,
+	"max_n_uptake":  100,
+	"max_p_uptake":  100,
+	"max_s_uptake":  100,
+	"max_o_uptake":  100
+}

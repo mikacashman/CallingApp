@@ -1,0 +1,13 @@
+compounds	name	formula	minFlux	maxFlux	concentration
+cpd00001	H2O	H2O	-100	100	1
+cpd00013	NH3	H4N	-100	100	1
+cpd00149	Co2+	Co	-100	100	1
+cpd00067	H+	H	-100	100	1
+cpd00244	Ni2+	Ni	-100	100	1
+cpd11640	H2	H2	-100	100	1
+cpd10515	Fe2+	Fe	-100	100	1
+cpd00048	Sulfate	O4S	-100	100	1
+cpd00009	Phosphate	HO4P	-100	0	1
+cpd00029	Acetate	C2H3O2	-100	0	1
+cpd00084	L-Cysteine	C3H7NO2S	-100	0	1
+cpd00011	CO2	CO2	-100	0	0.001
