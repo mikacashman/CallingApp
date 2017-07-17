@@ -90,7 +90,8 @@ class CallingAppTest(unittest.TestCase):
 	print("Test Began")
 	start = time.time()
 	FullStart = time.time()
-	
+	NUM_TESTS = 10	
+
 	#Set up test narrative
 	print("Setting up files")
 	suffix = int(time.time() + 1000)
@@ -180,9 +181,11 @@ class CallingAppTest(unittest.TestCase):
 	#Random Sample from file
 	#set and print a random seed
 	#generate the list to sample
-	sample = random.sample(xrange(0,52488),10)
+	sample = random.sample(xrange(0,52488),NUM_TESTS)
 	sample_file.write(str(sample))
 	sample_file.close()
+	count = 0
+	returnVal = {}
 	print("Begining loop.  Elapsed time: " + str(time.time()-FullStart))
 	for samp in sample:
 		print("loop: " + str(count) + "	   elapsed time: " + str(time.time()-FullStart))
