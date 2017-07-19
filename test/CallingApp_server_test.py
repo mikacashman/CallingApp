@@ -90,7 +90,7 @@ class CallingAppTest(unittest.TestCase):
 	print("Test Began")
 	start = time.time()
 	FullStart = time.time()
-	NUM_TESTS = 10	
+	NUM_TESTS = 2	
 
 	#Set up test narrative
 	print("Setting up files")
@@ -107,10 +107,10 @@ class CallingAppTest(unittest.TestCase):
 	#Save the genome to test narrative
 	#Must be a genbank type
 	start = time.time()
-	filenamegenome = "KBase_derived_BTheta.gbff"
+	filenamegenome = "EC_NCBI.gbff"
 	pathgenome = os.path.join(self.cfg['scratch'],filenamegenome)
 	shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
-	params = {'file':{'path':pathgenome},'genome_name':"BTheta",'workspace_name':wsName}
+	params = {'file':{'path':pathgenome},'genome_name':"Ecoli",'workspace_name':wsName}
 	tempgenome = genomeUtil.genbank_to_genome(params)
 	print("Genome saved: "+str(time.time()-start))
 
@@ -118,23 +118,23 @@ class CallingAppTest(unittest.TestCase):
 	#Currently all the same
 	#To alter move into for loop
 	start = time.time()
-	filenamemodel = "m125.GF.xls"
+	filenamemodel = "EC.GF.xls"
 	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
 	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
 	params = {'model_file':{'path':pathmodel},
-		'model_name':"BT125GF.FBAModel",
+		'model_name':"EC.CDG.GF.FBAModel",
 		'workspace_name':wsName,
-		'genome':"BTheta",
+		'genome':"Ecoli",
 		'biomass':["bio1"]}
 	tempmodel = fba.excel_file_to_model(params)
 	print("FBA Model saved: "+str(time.time()-start))
 
 	#Save the media to test narrative
-	filename = "Jmmol.125.tsv"
+	filename = "CDG.media.tsv"
 	path = os.path.join(self.cfg['scratch'],filename)
 	shutil.copy(os.path.join("test_files",filename),path)
 	params = {'media_file':{'path':path},
-		'media_name':'Jmmol125.media',
+		'media_name':'CDG.media',
 		'workspace_name':wsName}
 	tempmedia=fba.tsv_file_to_media(params)	
 	print("Media saved (" + str(time.time()-start) + ")")
@@ -154,6 +154,10 @@ class CallingAppTest(unittest.TestCase):
 	ID_file = open(ID_filename,"w+")	
 	sample_filename = self.cfg['scratch'] + "/samples.out"
 	sample_file = open(sample_filename,"w+")	
+
+	#=================================================================
+	#============== Change Test File Here ============================
+	#=================================================================
 	allID_filename = "IDs52488.out"
 	allID_path = os.path.join(self.cfg['scratch'],allID_filename)
 	shutil.copy(os.path.join("test_files",allID_filename),allID_path)
@@ -161,8 +165,8 @@ class CallingAppTest(unittest.TestCase):
 	#Set up basic fbaparams
 	fbaparams = {
         	'workspace':wsName,
-		"fbamodel_id":  "BT125GF.FBAModel",
-        	"media_id":  "Jmmol125.media",
+		"fbamodel_id":  "EC.CDG.GF.FBAModel",
+        	"media_id":  "CDG.media",
         	"target_reaction":  "bio1",
         	"fba_output_id":  "test_file_params",
         	"fva":  1, 
@@ -181,11 +185,14 @@ class CallingAppTest(unittest.TestCase):
 	#Random Sample from file
 	#set and print a random seed
 	#generate the list to sample
-	sample = random.sample(xrange(0,52488),NUM_TESTS)
+	sample = random.sample(xrange(0,2),NUM_TESTS)
 	sample_file.write(str(sample))
 	sample_file.close()
 	count = 0
 	returnVal = {}
+	
+	
+	
 	print("Begining loop.  Elapsed time: " + str(time.time()-FullStart))
 	for samp in sample:
 		print("loop: " + str(count) + "	   elapsed time: " + str(time.time()-FullStart))
