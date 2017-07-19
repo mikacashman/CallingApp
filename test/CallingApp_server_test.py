@@ -158,7 +158,7 @@ class CallingAppTest(unittest.TestCase):
 	#=================================================================
 	#============== Change Test File Here ============================
 	#=================================================================
-	allID_filename = "IDs52488.out"
+	allID_filename = "IDs_overnight_test1.out"
 	allID_path = os.path.join(self.cfg['scratch'],allID_filename)
 	shutil.copy(os.path.join("test_files",allID_filename),allID_path)
 
