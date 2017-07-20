@@ -94,7 +94,7 @@ class CallingAppTest(unittest.TestCase):
 
 	#To run tests faster (for Mika) use bool
 	#Real tests should have bool=FALSE
-	isMika = True 
+	isMika = False 
 
 	if (not isMika):
 		#Set up test narrative
@@ -209,7 +209,7 @@ class CallingAppTest(unittest.TestCase):
 	#=================================================================
 	#============== Set number of runs here ==========================
 	#=================================================================
-	NUM_TESTS = 4
+	NUM_TESTS = 20
 
 	print("Begining loop.  Elapsed time: " + str(time.time()-FullStart))
 	for t in range(0,NUM_TESTS):
