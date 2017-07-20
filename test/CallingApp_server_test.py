@@ -90,55 +90,72 @@ class CallingAppTest(unittest.TestCase):
 	print("Test Began")
 	start = time.time()
 	FullStart = time.time()
-	NUM_TESTS = 2	
 
-	#Set up test narrative
-	print("Setting up files")
-	suffix = int(time.time() + 1000)
-	wsName = "test_media_Calling_" + str(suffix)
-	ret = self.wsClient.create_workspace({'workspace':wsName})
-	#wsName = 'mikaelacashman:narrative_1498766137171'#CallingSDKTest
-	
-	#Set up imported modules
-	fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
-	genomeUtil = GenomeFileUtil(os.environ['SDK_CALLBACK_URL'])
-	print("Init setup and calls done: "+str(time.time()-start))
-	
-	#Save the genome to test narrative
-	#Must be a genbank type
-	start = time.time()
-	filenamegenome = "EC_NCBI.gbff"
-	pathgenome = os.path.join(self.cfg['scratch'],filenamegenome)
-	shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
-	params = {'file':{'path':pathgenome},'genome_name':"Ecoli",'workspace_name':wsName}
-	tempgenome = genomeUtil.genbank_to_genome(params)
-	print("Genome saved: "+str(time.time()-start))
+	#To run tests faster (for Mika) use bool
+	#Real tests should have bool=FALSE
+	isMika = False 
 
-	#Save the FBA model to test narrative
-	#Currently all the same
-	#To alter move into for loop
-	start = time.time()
-	filenamemodel = "EC.GF.xls"
-	pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
-	shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
-	params = {'model_file':{'path':pathmodel},
-		'model_name':"EC.CDG.GF.FBAModel",
-		'workspace_name':wsName,
-		'genome':"Ecoli",
-		'biomass':["bio1"]}
-	tempmodel = fba.excel_file_to_model(params)
-	print("FBA Model saved: "+str(time.time()-start))
+	if (not isMika):
+		#Set up test narrative
+		print("Setting up files")
+		suffix = int(time.time() + 1000)
+		wsName = "test_media_Calling_" + str(suffix)
+		ret = self.wsClient.create_workspace({'workspace':wsName})
+		#wsName = 'mikaelacashman:narrative_1498766137171'#CallingSDKTest
+		
+		#Set up imported modules
+		fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
+		genomeUtil = GenomeFileUtil(os.environ['SDK_CALLBACK_URL'])
+		print("Init setup and calls done: "+str(time.time()-start))
+		
+		#Save the genome to test narrative
+		#Must be a genbank type
+		start = time.time()
+		filenamegenome = "EC_NCBI.gbff"
+		pathgenome = os.path.join(self.cfg['scratch'],filenamegenome)
+		shutil.copy(os.path.join("test_files",filenamegenome),pathgenome)
+		params = {'file':{'path':pathgenome},'genome_name':"Ecoli",'workspace_name':wsName}
+		tempgenome = genomeUtil.genbank_to_genome(params)
+		print("Genome saved: "+str(time.time()-start))
 
-	#Save the media to test narrative
-	filename = "CDG.media.tsv"
-	path = os.path.join(self.cfg['scratch'],filename)
-	shutil.copy(os.path.join("test_files",filename),path)
-	params = {'media_file':{'path':path},
-		'media_name':'CDG.media',
-		'workspace_name':wsName}
-	tempmedia=fba.tsv_file_to_media(params)	
-	print("Media saved (" + str(time.time()-start) + ")")
+		#Save the FBA model to test narrative
+		#Currently all the same
+		#To alter move into for loop
+		start = time.time()
+		filenamemodel = "EC.GF.xls"
+		pathmodel = os.path.join(self.cfg['scratch'],filenamemodel)
+		shutil.copy(os.path.join("test_files",filenamemodel),pathmodel)
+		params = {'model_file':{'path':pathmodel},
+			'model_name':"EC.CDG.GF.FBAModel",
+			'workspace_name':wsName,
+			'genome':"Ecoli",
+			'biomass':["bio1"]}
+		tempmodel = fba.excel_file_to_model(params)
+		print("FBA Model saved: "+str(time.time()-start))
 
+		#Save the media to test narrative
+		filename = "CDG.media.tsv"
+		path = os.path.join(self.cfg['scratch'],filename)
+		shutil.copy(os.path.join("test_files",filename),path)
+		params = {'media_file':{'path':path},
+			'media_name':'CDG.media',
+			'workspace_name':wsName}
+		tempmedia=fba.tsv_file_to_media(params)	
+		print("Media saved (" + str(time.time()-start) + ")")
+
+	else:
+		#Set up test narrative
+		print("Setting up files")
+		#suffix = int(time.time() + 1000)
+		#wsName = "test_media_Calling_" + str(suffix)
+		#ret = self.wsClient.create_workspace({'workspace':wsName})
+		wsName = 'mikaelacashman:narrative_1498142336734'#ExploreFBAParams (production)
+		
+		#Set up imported modules
+		fba = fba_tools(os.environ['SDK_CALLBACK_URL'])
+		genomeUtil = GenomeFileUtil(os.environ['SDK_CALLBACK_URL'])
+		print("Init setup and calls done: "+str(time.time()-start))
+		
 	#Loop over FBA
 	#change range as desired
 	#test currently suports a max range(120,128)
@@ -185,19 +202,37 @@ class CallingAppTest(unittest.TestCase):
 	#Random Sample from file
 	#set and print a random seed
 	#generate the list to sample
-	sample = random.sample(xrange(0,2),NUM_TESTS)
-	sample_file.write(str(sample))
-	sample_file.close()
+	#sample = random.sample(xrange(0,2),NUM_TESTS)
+	#sample_file.write(str(sample))
+	#sample_file.close()
+	
+	#Run random tests from exisiting file
+	rand_filename = "IDs_172mil_V1.out"
+	rand_filepath = os.path.join(self.cfg['scratch'],rand_filename)
+	shutil.copy(os.path.join("test_files",rand_filename),rand_filepath)
+	#rand_filenamecopied = self.cfg['scratch'] + "./IDs_172milTest.out"
+	rand_file = open(rand_filepath,"r")
+	#rand_file = open(rand_filenamecopied,"r")
+	#read in lines to a data structure
+	tests = rand_file.readlines()
+	print("Number of tests to run: " + str(len(tests)))	
+
 	count = 0
 	returnVal = {}
-	
-	
-	
+	IDs = []
+	OVs = []
+	times = []
+
+		
+	NUM_TESTS = 20
 	print("Begining loop.  Elapsed time: " + str(time.time()-FullStart))
-	for samp in sample:
+	#for samp in sample:
+	for t in range(0,NUM_TESTS):
 		print("loop: " + str(count) + "	   elapsed time: " + str(time.time()-FullStart))
-		ID=linecache.getline(allID_path,samp+1).strip()
-		params=ID.split(",")
+		#ID=linecache.getline(allID_path,samp+1).strip()
+		#params=ID.split(",")
+		params = tests[t].strip().split(",")
+		IDs.append(tests[t])	
 		fbaparams['fva']	  =float(params[0])
 		fbaparams['minimize_flux']=float(params[1])
 		fbaparams['simulate_ko']  =float(params[2])
@@ -209,9 +244,12 @@ class CallingAppTest(unittest.TestCase):
 		fbaparams['max_p_uptake']=float(params[8])
 		fbaparams['max_s_uptake']=float(params[9])
 		fbaparams['max_o_uptake']=float(params[10])
+		fbaparams['thermodynamic_constraints']=float(params[11])
+		fbaparams['find_min_media']=float(params[12])
+		fbaparams['all_reversible']=float(params[13])	
 
-		ID_file.write(",".join(params))
-		ID_file.write("\n")
+		#ID_file.write(",".join(params))
+		#ID_file.write("\n")
 									
 		##Make the call to FBA
 		start = time.time()
@@ -223,9 +261,22 @@ class CallingAppTest(unittest.TestCase):
 			'id':fbaparams['fba_output_id']})['data']['objectiveValue'])
 		returnVal['time'] = str(time.time()-start)       	
 		count+=1
-		OV_file.write("%s\n" %returnVal['OV'])
-		status_file.write("%s\n" %returnVal['time'])
-		
+		#OV_file.write("%s\n" %returnVal['OV'])
+		#status_file.write("%s\n" %returnVal['time'])
+		OVs.append(returnVal['OV'])
+		times.append(returnVal['time'])		
+
+		#print IDs every 10 runs
+		if count%10 == 0 and count>1:
+			for j in range(0,9):
+				ID_file.write(IDs[j])
+				OV_file.write(OVs[j])
+				status_file.write(times[j])
+			IDs = []
+			OVs = []
+			times = []
+				
+
 		#Downloading (takes 3-6 mintues per file)
 		#print("FBA done, now finishing output (" + str(time.time()-start) + ")")
         	#Export the output FBA as tsv and excel
