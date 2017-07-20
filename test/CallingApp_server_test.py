@@ -93,7 +93,7 @@ class CallingAppTest(unittest.TestCase):
 
 	#To run tests faster (for Mika) use bool
 	#Real tests should have bool=FALSE
-	isMika = False 
+	isMika = True 
 
 	if (not isMika):
 		#Set up test narrative
@@ -270,8 +270,8 @@ class CallingAppTest(unittest.TestCase):
 		if count%10 == 0 and count>1:
 			for j in range(0,9):
 				ID_file.write(IDs[j])
-				OV_file.write(OVs[j])
-				status_file.write(times[j])
+				OV_file.write("%s\n" %OVs[j])
+				status_file.write("%s\n" %times[j])
 			IDs = []
 			OVs = []
 			times = []
