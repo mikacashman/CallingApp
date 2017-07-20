@@ -93,7 +93,7 @@ class CallingAppTest(unittest.TestCase):
 
 	#To run tests faster (for Mika) use bool
 	#Real tests should have bool=FALSE
-	isMika = True 
+	isMika = False 
 
 	if (not isMika):
 		#Set up test narrative
