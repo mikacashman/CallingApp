@@ -162,14 +162,16 @@ class CallingAppTest(unittest.TestCase):
 	#test currently suports a max range(120,128)
 	#has timed out on me before so can just run once for a check
 	##for x in range(120,128):
-	
-	#Set up output files
-	OV_filename = self.cfg['scratch'] + "/OV.out"
-	OV_file = open(OV_filename,"w+")
-	status_filename = self.cfg['scratch'] + "/status.out"
-	status_file = open(status_filename,"w+")
-	ID_filename = self.cfg['scratch'] + "/ID.out"
-	ID_file = open(ID_filename,"w+")	
+
+      	#Set up output files
+        OV_filename = self.cfg['scratch'] + "/OV.out"
+        #set to force the file to dump every buffersize
+        bufsize = 100 
+        OV_file = open(OV_filename,"w+",bufsize)
+        status_filename = self.cfg['scratch'] + "/status.out"
+        status_file = open(status_filename,"w+",bufsize)
+        ID_filename = self.cfg['scratch'] + "/ID.out"
+        ID_file = open(ID_filename,"w+",bufsize) 
 
 	#=================================================================
 	#============== Change Range of Values here ======================
@@ -236,40 +238,32 @@ class CallingAppTest(unittest.TestCase):
 		files = fba.run_flux_balance_analysis(fbaparams)
 		new_fba_ref = files['new_fba_ref']
 		#save time, OV, and params
-		IDs.append(
-			str(fbaparams['fva']) + "," + 
-			str(fbaparams['minimize_flux']) + "," +
-			str(fbaparams['simulate_ko']) + "," + 
-			str(fbaparams['exp_threshold_percentile']) + "," +
-			str(fbaparams['exp_threshold_margin']) + "," + 
-			str(fbaparams['activation_coefficient']) + "," +
-			str(fbaparams['max_c_uptake']) + "," +
-			str(fbaparams['max_n_uptake']) + "," +
-			str(fbaparams['max_p_uptake']) + "," +
-			str(fbaparams['max_s_uptake']) + "," +
-			str(fbaparams['max_o_uptake']) + "," +
-			str(fbaparams['thermodynamic_constraints']) + "," +
-			str(fbaparams['find_min_media']) + "," +
+		IDs =  	str(fbaparams['fva']) + "," + \
+			str(fbaparams['minimize_flux']) + "," + \
+			str(fbaparams['simulate_ko']) + "," + \
+			str(fbaparams['exp_threshold_percentile']) + "," + \
+			str(fbaparams['exp_threshold_margin']) + "," + \
+			str(fbaparams['activation_coefficient']) + "," + \
+			str(fbaparams['max_c_uptake']) + "," + \
+			str(fbaparams['max_n_uptake']) + "," + \
+			str(fbaparams['max_p_uptake']) + "," + \
+			str(fbaparams['max_s_uptake']) + "," + \
+			str(fbaparams['max_o_uptake']) + "," + \
+			str(fbaparams['thermodynamic_constraints']) + "," + \
+			str(fbaparams['find_min_media']) + "," + \
 			str(fbaparams['all_reversible'])
-		)
-		OVs.append(str(self.wsClient.get_object(
-			{'workspace':wsName,
-			'id':fbaparams['fba_output_id']})['data']['objectiveValue']))
-		times.append(str(time.time()-start))       	
-		count+=1
 		
+	
+                OVs=(str(self.wsClient.get_object(
+                        {'workspace':wsName,
+                        'id':fbaparams['fba_output_id']})['data']['objectiveValue']))
+                times=(str(time.time()-start))
+                ID_file.write("%s\n" %IDs)
+                OV_file.write("%s\n" %OVs)
+                status_file.write("%s\n" %times)
+                count+=1
+
 		print(OVs)
-		#print IDs every 10 runs
-		if count%2 == 0 and count>1:
-			print("On the 10th - writing")
-			for j in range(0,1):
-				ID_file.write("%s\n" %IDs[j])
-				OV_file.write("%s\n" %OVs[j])
-				status_file.write("%s\n" %times[j])
-			IDs = []
-			OVs = []
-			times = []
-				
 
 		#Downloading (takes 3-6 mintues per file)
 		#print("FBA done, now finishing output (" + str(time.time()-start) + ")")
