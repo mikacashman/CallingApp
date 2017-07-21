@@ -166,7 +166,7 @@ class CallingAppTest(unittest.TestCase):
       	#Set up output files
         OV_filename = self.cfg['scratch'] + "/OV.out"
         #set to force the file to dump every buffersize
-        bufsize = 100 
+        bufsize = 1 
         OV_file = open(OV_filename,"w+",bufsize)
         status_filename = self.cfg['scratch'] + "/status.out"
         status_file = open(status_filename,"w+",bufsize)
