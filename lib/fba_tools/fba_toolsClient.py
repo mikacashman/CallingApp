@@ -100,6 +100,62 @@ class fba_tools(object):
             if job_state['finished']:
                 return job_state['result'][0]
 
+    def _build_multiple_metabolic_models_submit(self, params, context=None):
+        return self._client._submit_job(
+             'fba_tools.build_multiple_metabolic_models', [params],
+             self._service_ver, context)
+
+    def build_multiple_metabolic_models(self, params, context=None):
+        """
+        Build multiple genome-scale metabolic models based on annotations in an input genome typed object
+        :param params: instance of type "BuildMultipleMetabolicModelsParams"
+           -> structure: parameter "genome_ids" of list of type "genome_id"
+           (A string representing a Genome id.), parameter "genome_text" of
+           String, parameter "genome_workspace" of type "workspace_name" (A
+           string representing a workspace name.), parameter "media_id" of
+           type "media_id" (A string representing a Media id.), parameter
+           "media_workspace" of type "workspace_name" (A string representing
+           a workspace name.), parameter "fbamodel_output_id" of type
+           "fbamodel_id" (A string representing a FBAModel id.), parameter
+           "workspace" of type "workspace_name" (A string representing a
+           workspace name.), parameter "template_id" of type "template_id" (A
+           string representing a NewModelTemplate id.), parameter
+           "template_workspace" of type "workspace_name" (A string
+           representing a workspace name.), parameter "coremodel" of type
+           "bool" (A binary boolean), parameter "gapfill_model" of type
+           "bool" (A binary boolean), parameter "thermodynamic_constraints"
+           of type "bool" (A binary boolean), parameter
+           "comprehensive_gapfill" of type "bool" (A binary boolean),
+           parameter "custom_bound_list" of list of String, parameter
+           "media_supplement_list" of list of type "compound_id" (A string
+           representing a compound id.), parameter "expseries_id" of type
+           "expseries_id" (A string representing an expression matrix id.),
+           parameter "expseries_workspace" of type "workspace_name" (A string
+           representing a workspace name.), parameter "expression_condition"
+           of String, parameter "exp_threshold_percentile" of Double,
+           parameter "exp_threshold_margin" of Double, parameter
+           "activation_coefficient" of Double, parameter "omega" of Double,
+           parameter "objective_fraction" of Double, parameter
+           "minimum_target_flux" of Double, parameter "number_of_solutions"
+           of Long
+        :returns: instance of type "BuildMultipleMetabolicModelsResults" ->
+           structure: parameter "new_fbamodel_ref" of type "ws_fbamodel_id"
+           (The workspace ID for a FBAModel data object. @id ws
+           KBaseFBA.FBAModel), parameter "new_fba_ref" of type "ws_fba_id"
+           (The workspace ID for a FBA data object. @id ws KBaseFBA.FBA)
+        """
+        job_id = self._build_multiple_metabolic_models_submit(params, context)
+        async_job_check_time = self._client.async_job_check_time
+        while True:
+            time.sleep(async_job_check_time)
+            async_job_check_time = (async_job_check_time *
+                self._client.async_job_check_time_scale_percent / 100.0)
+            if async_job_check_time > self._client.async_job_check_max_time:
+                async_job_check_time = self._client.async_job_check_max_time
+            job_state = self._check_job(job_id)
+            if job_state['finished']:
+                return job_state['result'][0]
+
     def _gapfill_metabolic_model_submit(self, params, context=None):
         return self._client._submit_job(
              'fba_tools.gapfill_metabolic_model', [params],
@@ -206,7 +262,9 @@ class fba_tools(object):
         :returns: instance of type "RunFluxBalanceAnalysisResults" ->
            structure: parameter "new_fba_ref" of type "ws_fba_id" (The
            workspace ID for a FBA data object. @id ws KBaseFBA.FBA),
-           parameter "objective" of Long
+           parameter "objective" of Long, parameter "report_name" of String,
+           parameter "report_ref" of type "ws_report_id" (The workspace ID
+           for a Report object @id ws KBaseReport.Report)
         """
         job_id = self._run_flux_balance_analysis_submit(params, context)
         async_job_check_time = self._client.async_job_check_time
